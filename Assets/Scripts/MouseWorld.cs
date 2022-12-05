@@ -14,11 +14,6 @@ public class MouseWorld : MonoBehaviour
         instance = this;
     }
 
-    private void Update()
-    {
-        transform.position = GetMouseWorldPosition();
-    }
-
     // Returns the point of the ray, that is cast from main camera to a plane in mousePlane layer.
     // Effectively returns world position from mouse position.
     public static Vector3 GetMouseWorldPosition()
