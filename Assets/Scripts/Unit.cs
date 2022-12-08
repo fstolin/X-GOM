@@ -11,12 +11,17 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
-        // Prevent the unit from moving after it's almost at the position
+        // Running - Prevent the unit from moving after it's almost at the position
         if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance) 
         {
             // We calculate normalized direction & then move the unit in that direction
             Vector3 moveDirection = (targetPosition - transform.position).normalized;
             transform.position += moveDirection * Time.deltaTime * moveSpeed;
+        } 
+        // Stopped
+        else
+        {
+            GetComponentInChildren<Animator>().SetBool("isRunning", false);
         }
 
         // Move to a new place after clicking the mouse
@@ -29,6 +34,8 @@ public class Unit : MonoBehaviour
     private void Move(Vector3 targetPosition)
     {
         this.targetPosition = targetPosition;
+        GetComponentInChildren<Animator>().SetBool("isRunning", true);
+        this.transform.LookAt(targetPosition);
     }
 
 }
