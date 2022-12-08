@@ -35,7 +35,20 @@ public class Unit : MonoBehaviour
     {
         this.targetPosition = targetPosition;
         GetComponentInChildren<Animator>().SetBool("isRunning", true);
-        this.transform.LookAt(targetPosition);
+        StartCoroutine(rotateSmoothly(targetPosition));
+    }
+
+    IEnumerator rotateSmoothly(Vector3 targetPosition)
+    {
+        float progress = 0f;
+        Quaternion startRotation = transform.rotation;
+
+        while (progress < 1)
+        {
+            transform.rotation = Quaternion.Lerp(startRotation, Quaternion.LookRotation(targetPosition), progress);
+            progress += 0.05f;
+            yield return new WaitForSeconds(0.05f);
+        }
     }
 
 }
