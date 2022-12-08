@@ -19,10 +19,10 @@ public class Unit : MonoBehaviour
             transform.position += moveDirection * Time.deltaTime * moveSpeed;
         }
 
-        // Testing method
-        if (Input.GetKeyDown(KeyCode.T))
+        // Move to a new place after clicking the mouse
+        if (Input.GetMouseButtonDown(1))
         {
-            Move(new Vector3(4, 0, 4));
+            Move(MouseWorld.GetMouseWorldPosition());
         }
     }
 

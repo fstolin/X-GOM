@@ -18,8 +18,11 @@ public class MouseWorld : MonoBehaviour
     // Effectively returns world position from mouse position.
     public static Vector3 GetMouseWorldPosition()
     {
+        // The ray from camera
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        // Casting the ray from the camera to the mouse position in the world - respecting only mousePlaneLayerMask
         Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, instance.mousePlaneLayerMask);
+        // Returning the collision point of the ray
         return raycastHit.point;
     }
 }
