@@ -6,8 +6,10 @@ public class Unit : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 4f;
     [SerializeField] private float stoppingDistance = .05f;
+    [SerializeField] private Animator unitAnimator;
 
     private Vector3 targetPosition;
+
 
     private void Update()
     {
@@ -17,11 +19,13 @@ public class Unit : MonoBehaviour
             // We calculate normalized direction & then move the unit in that direction
             Vector3 moveDirection = (targetPosition - transform.position).normalized;
             transform.position += moveDirection * Time.deltaTime * moveSpeed;
+            // Animation
+            unitAnimator.SetBool("isRunning", true);
         } 
         // Stopped
         else
         {
-            GetComponentInChildren<Animator>().SetBool("isRunning", false);
+            unitAnimator.SetBool("isRunning", false);
         }
 
         // Move to a new place after clicking the mouse
@@ -34,21 +38,8 @@ public class Unit : MonoBehaviour
     private void Move(Vector3 targetPosition)
     {
         this.targetPosition = targetPosition;
-        GetComponentInChildren<Animator>().SetBool("isRunning", true);
-        StartCoroutine(rotateSmoothly(targetPosition));
     }
 
-    IEnumerator rotateSmoothly(Vector3 targetPosition)
-    {
-        float progress = 0f;
-        Quaternion startRotation = transform.rotation;
-
-        while (progress < 1)
-        {
-            transform.rotation = Quaternion.Lerp(startRotation, Quaternion.LookRotation(targetPosition), progress);
-            progress += 0.05f;
-            yield return new WaitForSeconds(0.05f);
-        }
-    }
+    
 
 }
