@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 4
   stoppingDistance: 0.05
+  rotationSpeed: 8
   unitAnimator: {fileID: 2308149171199911536}
 --- !u!1001 &2403933380411574312
 PrefabInstance:

@@ -6,6 +6,7 @@ public class Unit : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 4f;
     [SerializeField] private float stoppingDistance = .05f;
+    [SerializeField] private float rotationSpeed = 8f;
     [SerializeField] private Animator unitAnimator;
 
     private Vector3 targetPosition;
@@ -21,6 +22,8 @@ public class Unit : MonoBehaviour
             transform.position += moveDirection * Time.deltaTime * moveSpeed;
             // Animation
             unitAnimator.SetBool("isRunning", true);
+            // Rotation
+            transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
         } 
         // Stopped
         else
