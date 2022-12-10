@@ -6,11 +6,16 @@ public class Unit : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 4f;
     [SerializeField] private float stoppingDistance = .05f;
-    [SerializeField] private float rotationSpeed = 8f;
+    [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private Animator unitAnimator;
 
     private Vector3 targetPosition;
 
+
+    private void Awake()
+    {
+        targetPosition = transform.position;    
+    }
 
     private void Update()
     {
@@ -30,15 +35,9 @@ public class Unit : MonoBehaviour
         {
             unitAnimator.SetBool("isRunning", false);
         }
-
-        // Move to a new place after clicking the mouse
-        if (Input.GetMouseButtonDown(1))
-        {
-            Move(MouseWorld.GetMouseWorldPosition());
-        }
     }
 
-    private void Move(Vector3 targetPosition)
+    public void Move(Vector3 targetPosition)
     {
         this.targetPosition = targetPosition;
     }
