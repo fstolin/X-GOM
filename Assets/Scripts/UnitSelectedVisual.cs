@@ -5,7 +5,7 @@ using System;
 
 public class UnitSelectedVisual : MonoBehaviour
 {
-    // Useless?
+    // This unit
     [SerializeField] private Unit unit;
 
     private MeshRenderer meshRenderer;
@@ -18,14 +18,21 @@ public class UnitSelectedVisual : MonoBehaviour
     private void Start()
     {
         UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged;
+        // Update visuals right away.
+        UpdateVisuals();
     }
 
     // Listening to on Selected Unit Chaged -> compare, whether the selected unit is this object
     private void UnitActionSystem_OnSelectedUnitChanged(object sender, EventArgs empty)
     {
+        UpdateVisuals();
+    }
+
+    private void UpdateVisuals()
+    {
         Unit selectedUnit = UnitActionSystem.Instance.getSelectedUnit();
         // If this unit is selected - enable meshrenderer of the circle
-        if (unit == UnitActionSystem.Instance.getSelectedUnit())
+        if (unit == selectedUnit)
         {
             meshRenderer.enabled = true;
         }
