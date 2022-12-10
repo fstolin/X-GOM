@@ -5,16 +5,30 @@ using System;
 
 public class UnitActionSystem : MonoBehaviour
 {
-
+    // Unit selected event
     public event System.EventHandler OnSelectedUnitChanged;
+    // Singleton pattern
+    public static UnitActionSystem Instance { get; private set; }
 
     [SerializeField] private LayerMask unitLayer;
 
+    // Selected unit
     private Unit selectedUnit;
 
     public Unit getSelectedUnit()
     {
         return selectedUnit;
+    }
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.LogError("There's modre than UnitActionSystem! " + this.transform + " - " + Instance);
+            Destroy(this.gameObject);
+            return;
+        }
+        Instance = this;
     }
 
     // Update is called once per frame
@@ -45,11 +59,13 @@ public class UnitActionSystem : MonoBehaviour
                 SetSelectedUnit(unit); 
                 return true;
             }
-        } 
-        // Selection was unsuccessful
+        }
+        // Selection was unsuccessful - Select null unit to fire events
+        SetSelectedUnit(null);
         return false;
     }
 
+    // Sets the selected unit & fires selection events
     private void SetSelectedUnit(Unit unit)
     {
         selectedUnit = unit;

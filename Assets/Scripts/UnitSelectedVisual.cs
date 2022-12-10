@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class UnitSelectedVisual : MonoBehaviour
 {
-
+    // Useless?
     [SerializeField] private Unit unit;
 
     private MeshRenderer meshRenderer;
@@ -14,15 +15,23 @@ public class UnitSelectedVisual : MonoBehaviour
         meshRenderer = this.GetComponent<MeshRenderer>();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged;
     }
 
-    // Update is called once per frame
-    void Update()
+    // Listening to on Selected Unit Chaged -> compare, whether the selected unit is this object
+    private void UnitActionSystem_OnSelectedUnitChanged(object sender, EventArgs empty)
     {
-        
+        Unit selectedUnit = UnitActionSystem.Instance.getSelectedUnit();
+        // If this unit is selected - enable meshrenderer of the circle
+        if (unit == UnitActionSystem.Instance.getSelectedUnit())
+        {
+            meshRenderer.enabled = true;
+        }
+        else
+        {
+            meshRenderer.enabled = false;
+        }
     }
 }

@@ -175,6 +175,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ca21e33b51387a4ab0689c6f529ec17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &7742970008155075025
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,5 +209,5 @@ Transform:
   - {fileID: 4736381577272043590}
   - {fileID: 1552388647259055869}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
