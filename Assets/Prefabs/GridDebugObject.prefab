@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7686301753229635366}
   - component: {fileID: 4738061138104005939}
   - component: {fileID: 5118411250592987121}
+  - component: {fileID: 2950947528257198001}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -172,6 +173,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 4738061138104005939}
   m_maskType: 0
+--- !u!114 &2950947528257198001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6670697618610560111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d75db1946ea137f4bba183e80150dc77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 0}
 --- !u!1 &7429736982353698431
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,6 +195,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 484330909506548337}
+  - component: {fileID: 8550096789581641876}
   m_Layer: 0
   m_Name: GridDebugObject
   m_TagString: Untagged
@@ -202,5 +217,18 @@ Transform:
   m_Children:
   - {fileID: 7686301753229635366}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8550096789581641876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7429736982353698431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d75db1946ea137f4bba183e80150dc77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 5118411250592987121}

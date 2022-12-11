@@ -31,9 +31,9 @@ public class GridSystem
     }
 
     // Get world position from grid position
-    public Vector3 GetWorldPosition(int x, int z)
+    public Vector3 GetWorldPosition(GridPosition gridPosition)
     {
-        return new Vector3(x, 0, z) * cellSize;
+        return new Vector3(gridPosition.x, 0, gridPosition.z) * cellSize;
     }
 
     // Get grid position from world position
@@ -45,13 +45,27 @@ public class GridSystem
             );
     }
 
+    // Gets the grid obejct from grid array
+    public GridObject GetGridObject(GridPosition gridPosition)
+    {
+        return gridObjectArray[gridPosition.x, gridPosition.z]; 
+    }
+
+    // Creates grid visualization coordinates
     public void CreateDebugObjects(Transform debugPrefab)
     {
         for (int x = 0; x < width; x++)
         {
             for (int z = 0; z < height; z++)
             {
-                GameObject.Instantiate(debugPrefab, GetWorldPosition(x, z), Quaternion.identity);   
+                // Position in grid 
+                GridPosition position = new GridPosition(x, z);
+                // Instantiate the text (debug object)
+                Transform debugTransform = GameObject.Instantiate(debugPrefab, GetWorldPosition(position), Quaternion.identity);
+                // Get the Grid Debug Object component - to set the GridObject
+                GridDebugObject gridDebugObject = debugTransform.GetComponent<GridDebugObject>();
+                // Assign the gridObject to a DebugObject
+                gridDebugObject.SetGridObject(GetGridObject(position));
             }
         }
     }

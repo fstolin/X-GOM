@@ -13,7 +13,7 @@ public struct GridPosition
     // ToString method for our struct
     public override string ToString()
     {
-        return ("x: " + x + "; z: " + z);
+        return (x + ", " + z);
     }
 
 }
