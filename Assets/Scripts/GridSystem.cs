@@ -26,14 +26,18 @@ public class GridSystem
         }
     }
 
+    // Get world position from grid position
     public Vector3 GetWorldPosition(int x, int z)
     {
         return new Vector3(x, 0, z) * cellSize;
     }
 
-
-    public GetGridPosition(Vector3 position)
+    // Get grid position from world position
+    public GridPosition GetGridPosition(Vector3 position)
     {
-
+        return new GridPosition(
+            Mathf.RoundToInt(position.x / cellSize),
+            Mathf.RoundToInt(position.z / cellSize)
+            );
     }
 }
