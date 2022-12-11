@@ -10,11 +10,20 @@ public class Unit : MonoBehaviour
     [SerializeField] private Animator unitAnimator;
 
     private Vector3 targetPosition;
-
+    private GridPosition gridPosition;
 
     private void Awake()
     {
-        targetPosition = transform.position;    
+        targetPosition = transform.position;   
+    }
+
+    private void Start()
+    {
+        // Get grid position from the units world position
+        gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
+
+        Debug.Assert(gridPosition != null);
+        LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
     }
 
     private void Update()
@@ -35,6 +44,15 @@ public class Unit : MonoBehaviour
         {
             unitAnimator.SetBool("isRunning", false);
         }
+
+        // Check whether Unit already left the tile & entered a new one -> due to lable changes
+        GridPosition newGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
+        if (newGridPosition != gridPosition)
+        {
+            // Unit has changed grid position
+            LevelGrid.Instance.UnitMovedGridPosition(this, gridPosition, newGridPosition);
+            gridPosition = newGridPosition;
+        }
     }
 
     public void Move(Vector3 targetPosition)
@@ -42,6 +60,10 @@ public class Unit : MonoBehaviour
         this.targetPosition = targetPosition;
     }
 
-    
+    public override string ToString()
+    {
+        return this.transform.name; 
+    }
+
 
 }
