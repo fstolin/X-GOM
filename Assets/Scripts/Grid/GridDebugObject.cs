@@ -11,22 +11,8 @@ public class GridDebugObject : MonoBehaviour
 
     private void Update()
     {
-        if (gridObject == null)
-        {
-            Debug.Log("GridObejct is null; " + transform.parent);
-        } else
-        {
-            Debug.Log("GridObject GOOD" + transform.parent);
-        }
-
-        if (textField == null)
-        {
-            Debug.Log("Text is null;" + transform.parent);
-        }
-        else
-        {
-            Debug.Log("Text GOOD" + transform.parent);
-        }
+        Debug.Assert(gridObject != null);
+        Debug.Assert(textField != null);
 
         UpdateGridObjectLabel();
     }

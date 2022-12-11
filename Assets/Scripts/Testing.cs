@@ -11,7 +11,7 @@ public class Testing : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        g = new GridSystem(1, 1, 2f);
+        g = new GridSystem(10, 10, 2f);
         g.CreateDebugObjects(gridDebugObjectPrefab);        
     }
 

@@ -6,7 +6,7 @@ public struct GridPosition
 
     public GridPosition(int x, int z)
     {
-        this.x = x; 
+        this.x = x;
         this.z = z;
     }
 
