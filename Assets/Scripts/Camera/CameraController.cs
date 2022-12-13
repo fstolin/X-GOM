@@ -1,18 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class CameraController : MonoBehaviour
 {
 
     [SerializeField] private float cameraMoveSpeed = 10f;
     [SerializeField] private float cameraRotationSpeed = 100f;
+    [SerializeField] private float zoomSpeed = 10f;
+    [SerializeField] private float zoomUpperBounds = 8f;
+    [SerializeField] private float zoomLowerBounds = 1f;
+    [SerializeField] private CinemachineVirtualCamera virtualCamera;
+
+    private CinemachineTransposer cinemachineTransposer;
+    private Vector3 targetFollowOffset;
+    private Vector3 followOffset;
+
+    private void Awake()
+    {
+        cinemachineTransposer = virtualCamera.GetCinemachineComponent<CinemachineTransposer>();
+        targetFollowOffset = cinemachineTransposer.m_FollowOffset;
+    }
 
     // Update is called once per frame
     private void Update()
     {
         HandleMovement();
         HandleRotation();
+        HandleZoom2();
     }
 
     private void HandleMovement()
@@ -56,5 +72,16 @@ public class CameraController : MonoBehaviour
         {
             transform.Rotate(0f, cameraRotationSpeed * Time.deltaTime * Input.GetAxis("Mouse X"), 0f);
         }
+    }
+
+    private void HandleZoom2()
+    {
+
+        float zoomAmount = 1f;
+        if (Input.mouseScrollDelta.y > 0) targetFollowOffset.y -= zoomAmount;
+        if (Input.mouseScrollDelta.y < 0) targetFollowOffset.y += zoomAmount;
+
+        targetFollowOffset.y = Mathf.Clamp(targetFollowOffset.y, zoomLowerBounds, zoomUpperBounds);
+        cinemachineTransposer.m_FollowOffset = Vector3.Lerp(cinemachineTransposer.m_FollowOffset, targetFollowOffset, Time.deltaTime * zoomSpeed);
     }
 }
