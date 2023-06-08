@@ -73,3 +73,4 @@ crashlytics-build.properties
 
 # Assets from unity store
 /[Aa]ssets/[Ee]xternal[Aa]ssets/*
+/[Aa]ssets/[Aa]nimation/*
