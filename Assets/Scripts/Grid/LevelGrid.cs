@@ -34,7 +34,7 @@ public class LevelGrid : MonoBehaviour
         gridObject.AddUnit(unit);
     }
 
-    // Gets a unit at grid position
+    // Gets a  unit at grid position
     public List<Unit> GetUnitListAtGridPosition(GridPosition gridPosition)
     {
         return gridSystem.GetGridObject(gridPosition).GetUnitList();
