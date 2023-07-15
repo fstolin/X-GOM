@@ -30,7 +30,7 @@ public class MoveAction : MonoBehaviour
             // Animation
             unitAnimator.SetBool("isRunning", true);
             // Rotation
-            transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
+            transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
         }
         // Stopped
         else
@@ -39,9 +39,15 @@ public class MoveAction : MonoBehaviour
         }
     }
 
-    public void Move(Vector3 targetPosition)
+    public void Move(GridPosition gridPosition)
     {
-        this.targetPosition = targetPosition;
+        this.targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
+    }
+
+    // Checks whether a position is valid for move action
+    public bool IsValidMoveActionPosition(GridPosition gridPosition)
+    {
+        return GetValidActionGridPositionList().Contains(gridPosition);
     }
 
     // Returns a list of valid grid positions for momvement.
@@ -59,6 +65,23 @@ public class MoveAction : MonoBehaviour
             {
                 GridPosition offsetGridPosition = new GridPosition(x, z);
                 GridPosition inRangeGridPosition = unitGridPosition + offsetGridPosition;
+                // Do nothing if position is invalid
+                if (!LevelGrid.Instance.IsValidGridPosition(inRangeGridPosition))
+                {
+                    continue;
+                }
+                // Do nothing if inRangeGridPosition is same as unit position
+                if (unitGridPosition == inRangeGridPosition)
+                {
+                    continue;
+                }
+                // Occupied slots
+                if (LevelGrid.Instance.HasAnyUnitsOnGridPosition(inRangeGridPosition))
+                {
+                    continue;
+                }
+
+                // Add it to list if it's valid
                 validGridPositionList.Add(inRangeGridPosition);
             }
         }

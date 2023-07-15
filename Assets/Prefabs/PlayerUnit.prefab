@@ -76,6 +76,7 @@ MonoBehaviour:
   moveSpeed: 4
   stoppingDistance: 0.05
   rotationSpeed: 10
+  maxMoveDistance: 1
   unitAnimator: {fileID: 2308149171199911536}
 --- !u!1 &4646486227961720193
 GameObject:

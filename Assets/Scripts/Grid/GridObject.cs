@@ -31,6 +31,11 @@ public class GridObject
         return unitList;
     }
 
+    public bool IsGridTileEmpty()
+    {
+        return unitList.Count == 0;
+    }
+
     public override string ToString()
     {
         //// Empty unit list

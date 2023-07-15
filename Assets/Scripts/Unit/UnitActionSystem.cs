@@ -43,7 +43,11 @@ public class UnitActionSystem : MonoBehaviour
         // Move selectedUnit to a new place after clicking the mouse
         if (Input.GetMouseButtonDown(1) && selectedUnit != null)
         {
-            selectedUnit.GetMoveAction().Move(MouseWorld.GetMouseWorldPosition());
+            GridPosition targetMovePosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetMouseWorldPosition());
+            if (selectedUnit.GetMoveAction().IsValidMoveActionPosition(targetMovePosition))
+            {
+                selectedUnit.GetMoveAction().Move(targetMovePosition);
+            }            
         }
     }
 

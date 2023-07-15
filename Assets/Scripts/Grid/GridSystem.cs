@@ -69,4 +69,13 @@ public class GridSystem
             }
         }
     }
+
+    // Checks whether the gridPosition is within height, widht and not lesser than one
+    public bool isValidGridPosition(GridPosition gridPosition)
+    {
+        return  gridPosition.x >=0 && 
+                gridPosition.z >= 0 && 
+                gridPosition.x < width && 
+                gridPosition.z < height;
+    }
 }

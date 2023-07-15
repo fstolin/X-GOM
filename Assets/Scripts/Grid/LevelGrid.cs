@@ -5,7 +5,7 @@ using UnityEngine;
 public class LevelGrid : MonoBehaviour
 {
     // Singleton pattern
-    public static LevelGrid Instance { get; private set; } 
+    public static LevelGrid Instance { get; private set; }
     // Debug prefab
     [SerializeField] Transform gridDebugObjectPrefab;
 
@@ -53,4 +53,16 @@ public class LevelGrid : MonoBehaviour
     }
 
     public GridPosition GetGridPosition(Vector3 worldPosition) => gridSystem.GetGridPosition(worldPosition);
+
+    public Vector3 GetWorldPosition(GridPosition gridPosition) => gridSystem.GetWorldPosition(gridPosition);
+
+    // Checks whether the gridPosition is within height, widht and not lesser than one
+    public bool IsValidGridPosition(GridPosition gridPosition) => gridSystem.isValidGridPosition(gridPosition);
+
+    public bool HasAnyUnitsOnGridPosition(GridPosition gridPosition)
+    {
+        GridObject gridObject = gridSystem.GetGridObject(gridPosition);
+        return !gridObject.IsGridTileEmpty();
+    }
+
 }
