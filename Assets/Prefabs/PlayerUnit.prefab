@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2403933380738606856}
   - component: {fileID: 411045226433110580}
   - component: {fileID: 2403933380738606857}
+  - component: {fileID: 1977513558190308676}
   m_Layer: 7
   m_Name: PlayerUnit
   m_TagString: Untagged
@@ -33,7 +34,7 @@ Transform:
   - {fileID: 2399357034358654824}
   - {fileID: 4265922092573465117}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &411045226433110580
 BoxCollider:
@@ -58,6 +59,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5e816fe94bd0294bb57493a628d990d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1977513558190308676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2403933380738606859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 262f1d018596c60409995de7af3e44b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 4

@@ -43,7 +43,7 @@ public class UnitActionSystem : MonoBehaviour
         // Move selectedUnit to a new place after clicking the mouse
         if (Input.GetMouseButtonDown(1) && selectedUnit != null)
         {
-            selectedUnit.Move(MouseWorld.GetMouseWorldPosition());
+            selectedUnit.GetMoveAction().Move(MouseWorld.GetMouseWorldPosition());
         }
     }
 
