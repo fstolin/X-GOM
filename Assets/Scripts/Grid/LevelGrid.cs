@@ -65,4 +65,7 @@ public class LevelGrid : MonoBehaviour
         return !gridObject.IsGridTileEmpty();
     }
 
+    public int GetWidth() => gridSystem.GetWidth();
+    public int GetHeight() => gridSystem.GetHeight();
+
 }
