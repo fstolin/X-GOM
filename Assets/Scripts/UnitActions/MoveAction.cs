@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MoveAction : MonoBehaviour
+public class MoveAction : BaseAction
 {
     [SerializeField] private float moveSpeed = 4f;
     [SerializeField] private float stoppingDistance = .05f;
@@ -12,13 +12,12 @@ public class MoveAction : MonoBehaviour
     [SerializeField] private Animator unitAnimator;
 
     private Vector3 targetPosition;
-    private Unit unit;
-    private bool isActive;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         targetPosition = transform.position;
-        unit = GetComponent<Unit>();
+        unitAnimator.SetBool("isRunning", false);
     }
 
     private void Update()
@@ -43,7 +42,7 @@ public class MoveAction : MonoBehaviour
             this.isActive = false;
         }
         // Rotation
-        transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
+        transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
     }
 
     public void Move(GridPosition gridPosition)
