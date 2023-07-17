@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MoveAction : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class MoveAction : MonoBehaviour
 
     private Vector3 targetPosition;
     private Unit unit;
+    private bool isActive;
 
     private void Awake()
     {
@@ -21,27 +23,33 @@ public class MoveAction : MonoBehaviour
 
     private void Update()
     {
+        // Only move, when the move action is active.
+        if (!isActive) return;
+
+        // We calculate normalized direction & then move the unit in that direction
+        Vector3 moveDirection = (targetPosition - transform.position).normalized;
+
         // Running - Prevent the unit from moving after it's almost at the position
         if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)
-        {
-            // We calculate normalized direction & then move the unit in that direction
-            Vector3 moveDirection = (targetPosition - transform.position).normalized;
+        {            
             transform.position += moveDirection * Time.deltaTime * moveSpeed;
             // Animation
             unitAnimator.SetBool("isRunning", true);
-            // Rotation
-            transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
         }
         // Stopped
         else
         {
             unitAnimator.SetBool("isRunning", false);
+            this.isActive = false;
         }
+        // Rotation
+        transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
     }
 
     public void Move(GridPosition gridPosition)
     {
         this.targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
+        this.isActive = true;
     }
 
     // Checks whether a position is valid for move action
@@ -54,6 +62,7 @@ public class MoveAction : MonoBehaviour
     public List<GridPosition> GetValidActionGridPositionList()
     {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
+        if (unit == null) return validGridPositionList;
 
         // Unit grid position
         GridPosition unitGridPosition = unit.GetGridPosition();
