@@ -49,6 +49,9 @@ public class UnitActionSystem : MonoBehaviour
                 selectedUnit.GetMoveAction().Move(targetMovePosition);
             }            
         }
+        if (Input.GetKeyDown(KeyCode.U)) {
+            selectedUnit.GetSpinAction().Spin();
+        }
     }
 
     // Tries to select a Unit and get it's unit component on mous click
