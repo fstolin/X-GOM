@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,19 +35,23 @@ public class MoveAction : BaseAction
             transform.position += moveDirection * Time.deltaTime * moveSpeed;
             // Animation
             unitAnimator.SetBool("isRunning", true);
+            GridSystemVisual.Instance.DisableRenderVisuals();
         }
         // Stopped
         else
         {
             unitAnimator.SetBool("isRunning", false);
             this.isActive = false;
+            GridSystemVisual.Instance.EnableRenderVisuals();
+            onActionComplete();
         }
         // Rotation
         transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
     }
 
-    public void Move(GridPosition gridPosition)
+    public void Move(GridPosition gridPosition, Action onActionComplete)
     {
+        this.onActionComplete = onActionComplete;
         this.targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
         this.isActive = true;
     }

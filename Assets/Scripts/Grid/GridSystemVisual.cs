@@ -10,6 +10,7 @@ public class GridSystemVisual : MonoBehaviour
     [SerializeField] private Transform gridSystemVisualPrefab;
 
     private GridSystemVisualSingle[,] gridSystemVisualSingleArray;
+    private bool shouldRenderVisuals = true;
 
     // Singleton instance awake
     private void Awake()
@@ -42,7 +43,10 @@ public class GridSystemVisual : MonoBehaviour
 
     private void Update()
     {
-        UpdateGridVisual();
+        if (shouldRenderVisuals)
+        {
+            UpdateGridVisual();
+        }        
     }
 
     public void HideAllGridVisuals()
@@ -54,6 +58,17 @@ public class GridSystemVisual : MonoBehaviour
                 gridSystemVisualSingleArray[x, z].Hide();
             }
         }
+    }
+
+    public void EnableRenderVisuals()
+    {
+        shouldRenderVisuals = true;
+    }
+
+    public void DisableRenderVisuals()
+    {
+        shouldRenderVisuals = false;
+        HideAllGridVisuals();
     }
 
     public void ShowGridPositionList(List<GridPosition> gridPositionList)

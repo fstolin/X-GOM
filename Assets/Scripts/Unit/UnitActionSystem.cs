@@ -14,6 +14,7 @@ public class UnitActionSystem : MonoBehaviour
 
     // Selected unit
     private Unit selectedUnit;
+    private bool isBusy;
 
     public Unit getSelectedUnit()
     {
@@ -34,6 +35,10 @@ public class UnitActionSystem : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (isBusy)
+        {
+            return;
+        }
         // Handle the selection of units, should the unit be selected,
         // do not move it in the same frame
         if (Input.GetMouseButtonDown(0))
@@ -43,15 +48,28 @@ public class UnitActionSystem : MonoBehaviour
         // Move selectedUnit to a new place after clicking the mouse
         if (Input.GetMouseButtonDown(1) && selectedUnit != null)
         {
+            SetBusy();  
+            // Target move position
             GridPosition targetMovePosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetMouseWorldPosition());
             if (selectedUnit.GetMoveAction().IsValidMoveActionPosition(targetMovePosition))
             {
-                selectedUnit.GetMoveAction().Move(targetMovePosition);
+                selectedUnit.GetMoveAction().Move(targetMovePosition, ClearBusy);
             }            
         }
         if (Input.GetKeyDown(KeyCode.U)) {
-            selectedUnit.GetSpinAction().Spin();
+            SetBusy();
+            selectedUnit.GetSpinAction().Spin(ClearBusy);
         }
+    }
+
+    private void SetBusy()
+    {
+        isBusy = true;
+    }
+
+    private void ClearBusy()
+    {
+        isBusy = false;
     }
 
     // Tries to select a Unit and get it's unit component on mous click
