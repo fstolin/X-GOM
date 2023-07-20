@@ -10,10 +10,14 @@ public abstract class BaseAction : MonoBehaviour
     protected Unit unit;
     protected bool isActive = false;
     protected Action onActionComplete;
+    protected string actionName;
 
     protected virtual void Awake()
     {
         unit = GetComponent<Unit>();
     }
+
+    // abstract = have to implement
+    public abstract string GetActionName();
 
 }
