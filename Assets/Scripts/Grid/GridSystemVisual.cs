@@ -10,7 +10,7 @@ public class GridSystemVisual : MonoBehaviour
     [SerializeField] private Transform gridSystemVisualPrefab;
 
     private GridSystemVisualSingle[,] gridSystemVisualSingleArray;
-    private bool shouldRenderVisuals = true;
+    [SerializeField] private bool shouldRenderVisuals = true;
 
     // Singleton instance awake
     private void Awake()
