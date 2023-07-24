@@ -60,11 +60,14 @@ public class GridSystemVisual : MonoBehaviour
         }
     }
 
+    // Public method to enable render visuals
     public void EnableRenderVisuals()
     {
         shouldRenderVisuals = true;
     }
 
+
+    // Public method to disable render visuals
     public void DisableRenderVisuals()
     {
         shouldRenderVisuals = false;
@@ -79,12 +82,15 @@ public class GridSystemVisual : MonoBehaviour
         }
     }
 
+
+    // Updates the grid visuals
     private void UpdateGridVisual()
     {
         HideAllGridVisuals();
-        Unit selectedUnit = UnitActionSystem.Instance.getSelectedUnit();
-        if (selectedUnit == null) { return; }
-        ShowGridPositionList(selectedUnit.GetMoveAction().GetValidActionGridPositionList());
+        BaseAction selectedAction = UnitActionSystem.Instance.getSelectedAction();
+        if (selectedAction == null) { return; }
+
+        ShowGridPositionList(selectedAction.GetValidActionGridPositionList());
     }
 
 }

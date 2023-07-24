@@ -20,4 +20,14 @@ public abstract class BaseAction : MonoBehaviour
     // abstract = have to implement
     public abstract string GetActionName();
 
+    // generic take action method
+    public abstract void TakeAction(GridPosition gridPosition, Action onActionComplete);
+
+    public virtual bool IsValidActionGridPosition(GridPosition gridPosition)
+    {
+        return GetValidActionGridPositionList().Contains(gridPosition);
+    }
+
+    public abstract List<GridPosition> GetValidActionGridPositionList();
+
 }

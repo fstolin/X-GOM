@@ -32,11 +32,11 @@ public class SpinAction : BaseAction
             onActionComplete();
         }
 
-        transform.eulerAngles += new Vector3(0,spinAddAmount, 0);
+        transform.eulerAngles += new Vector3(0, spinAddAmount, 0);
     }
 
     // Spins the the player 360 degrees
-    public void Spin(Action onActionComplete)
+    public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
         // assign spinComplete reference to this Spin Action
         this.onActionComplete = onActionComplete;
@@ -47,5 +47,18 @@ public class SpinAction : BaseAction
     public override string GetActionName()
     {
         return "SPIN";
+    }
+
+    public override List<GridPosition> GetValidActionGridPositionList()
+    {
+        List<GridPosition> validGridPositionList = new List<GridPosition>();
+        GridPosition unitGridPosition = unit.GetGridPosition();
+
+        Debug.Log("SpinAction");
+
+        return new List<GridPosition>
+        {
+            unitGridPosition
+        };
     }
 }
