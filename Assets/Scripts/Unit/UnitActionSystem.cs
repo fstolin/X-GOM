@@ -8,6 +8,7 @@ public class UnitActionSystem : MonoBehaviour
 {
     // Unit selected event
     public event System.EventHandler OnSelectedUnitChanged;
+    public event System.EventHandler OnSelectedActionChanged;
     // Singleton pattern
     public static UnitActionSystem Instance { get; private set; }
 
@@ -133,5 +134,7 @@ public class UnitActionSystem : MonoBehaviour
     {
         selectedAction = action;
         GridSystemVisual.Instance.EnableRenderVisuals();
+        // Fire selected action events
+        OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
     }
 }

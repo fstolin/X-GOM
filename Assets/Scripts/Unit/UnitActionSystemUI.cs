@@ -14,10 +14,12 @@ public class UnitActionSystemUI : MonoBehaviour
     private void Start()
     {
         UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged;
+        UnitActionSystem.Instance.OnSelectedActionChanged += UnitActionSystem_OnSelectedActionChanged;
         CreateUnitActionButtons();
+        UpdateSelectedActionVisual();
     }
 
-    
+
     // Create UI buttons for each of the actions
     private void CreateUnitActionButtons()
     {
@@ -46,6 +48,35 @@ public class UnitActionSystemUI : MonoBehaviour
     private void UnitActionSystem_OnSelectedUnitChanged(object sender,  EventArgs e)
     {
         CreateUnitActionButtons();
+        UpdateSelectedActionVisual();
+    }
+
+    private void UnitActionSystem_OnSelectedActionChanged(object sender, EventArgs e)
+    {
+        UpdateSelectedActionVisual();
+    }
+
+    // Updates the visual of the selected action to be green
+    private void UpdateSelectedActionVisual()
+    {
+        BaseAction selectedAction = UnitActionSystem.Instance.getSelectedAction();
+
+        foreach(Transform buttonTransform in actionButtonContainerTransform)
+        {
+            ActionButtonUI ui = buttonTransform.gameObject.GetComponent<ActionButtonUI>();
+            if (selectedAction == null)
+            {
+                ui.Deselect();
+            }
+            else if (ui.GetName() == selectedAction.GetActionName())
+            {
+                ui.SetSelected();
+            }
+            else
+            {
+                ui.Deselect();
+            }
+        }
     }
 
 }
