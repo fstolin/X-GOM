@@ -133,7 +133,7 @@ public class UnitActionSystem : MonoBehaviour
     public void SetSelectedAction(BaseAction action)
     {
         selectedAction = action;
-        GridSystemVisual.Instance.EnableRenderVisuals();
+        //GridSystemVisual.Instance.EnableRenderVisuals();
         // Fire selected action events
         OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
     }

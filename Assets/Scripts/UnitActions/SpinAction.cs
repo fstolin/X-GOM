@@ -21,7 +21,7 @@ public class SpinAction : BaseAction
 
     private void Update()
     {
-        if (!isActive) return;
+        if (!isActive) return;        
 
         float spinAddAmount = 360f * Time.deltaTime;
         alreadySpinned += spinAddAmount;
@@ -30,6 +30,7 @@ public class SpinAction : BaseAction
         {
             isActive = false;
             onActionComplete();
+            HandleBusyUI();
         }
 
         transform.eulerAngles += new Vector3(0, spinAddAmount, 0);
@@ -42,6 +43,7 @@ public class SpinAction : BaseAction
         this.onActionComplete = onActionComplete;
         isActive = true;
         alreadySpinned = 0f;
+        HandleBusyUI();
     }
 
     public override string GetActionName()

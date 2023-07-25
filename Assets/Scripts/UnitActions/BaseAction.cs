@@ -28,6 +28,18 @@ public abstract class BaseAction : MonoBehaviour
         return GetValidActionGridPositionList().Contains(gridPosition);
     }
 
+    protected virtual void HandleBusyUI()
+    {
+        if (!isActive)
+        {
+            GridSystemVisual.Instance.EnableRenderVisuals();
+        } else
+        {
+            GridSystemVisual.Instance.DisableRenderVisuals();
+        }
+        UnitActionSystemUI.Instance.ToggleBusyUI();
+    }
+
     public abstract List<GridPosition> GetValidActionGridPositionList();
 
 }

@@ -7,9 +7,22 @@ using UnityEngine.UI;
 
 public class UnitActionSystemUI : MonoBehaviour
 {
+    // Singleton pattern
+    public static UnitActionSystemUI Instance { get; private set; }
 
     [SerializeField] private Transform actionButtonPrefab;
     [SerializeField] private Transform actionButtonContainerTransform;
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.LogError("There's modre than UnitActionSystemUI! " + this.transform + " - " + Instance);
+            Destroy(this.gameObject);
+            return;
+        }
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -77,6 +90,13 @@ public class UnitActionSystemUI : MonoBehaviour
                 ui.SetDeselected();
             }
         }
+    }
+
+    // Toggles the UI to the busy state. In my case -> no UI
+    public void ToggleBusyUI()
+    {
+        bool isUIActive = actionButtonContainerTransform.gameObject.activeSelf;
+        actionButtonContainerTransform.gameObject.SetActive(!isUIActive);
     }
 
 }

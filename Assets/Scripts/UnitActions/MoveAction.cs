@@ -35,14 +35,13 @@ public class MoveAction : BaseAction
             transform.position += moveDirection * Time.deltaTime * moveSpeed;
             // Animation
             unitAnimator.SetBool("isRunning", true);
-            GridSystemVisual.Instance.DisableRenderVisuals();
         }
         // Stopped
         else
         {
             unitAnimator.SetBool("isRunning", false);
             this.isActive = false;
-            GridSystemVisual.Instance.EnableRenderVisuals();
+            HandleBusyUI();
             onActionComplete();
         }
         // Rotation
@@ -54,6 +53,7 @@ public class MoveAction : BaseAction
         this.onActionComplete = onActionComplete;
         this.targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
         this.isActive = true;
+        HandleBusyUI();
     }
 
     // Returns a list of valid grid positions for momvement.
