@@ -66,15 +66,15 @@ public class UnitActionSystemUI : MonoBehaviour
             ActionButtonUI ui = buttonTransform.gameObject.GetComponent<ActionButtonUI>();
             if (selectedAction == null)
             {
-                ui.Deselect();
+                ui.SetDeselected();
             }
-            else if (ui.GetName() == selectedAction.GetActionName())
+            else if (ui.GetButtonAction() == selectedAction)
             {
                 ui.SetSelected();
             }
             else
             {
-                ui.Deselect();
+                ui.SetDeselected();
             }
         }
     }

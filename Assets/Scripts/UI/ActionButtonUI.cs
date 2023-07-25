@@ -10,12 +10,14 @@ public class ActionButtonUI : MonoBehaviour
     [SerializeField] private Button button;
     [SerializeField] private Transform selectedUI;
 
-    private string actionName;
+    private BaseAction baseAction;
 
+    // Sets the base action for the button
+    // This action is kept for future reference
     public void SetBaseAction(BaseAction action)
     {
         textMeshPro.text = action.GetActionName();
-        actionName = textMeshPro.text;
+        this.baseAction = action;
         button.onClick.AddListener(() =>
         {
             // Anonymous function code
@@ -23,18 +25,20 @@ public class ActionButtonUI : MonoBehaviour
         });
     }
 
+    // Sets green visual around the action -> selected
     public void SetSelected()
     {
         selectedUI.gameObject.SetActive(true);
     }
 
-    public void Deselect()
+    // Disables the green visual around the action -> deselected
+    public void SetDeselected()
     {
         selectedUI.gameObject.SetActive(false);
     }
 
-    public string GetName()
+    public BaseAction GetButtonAction()
     {
-        return actionName;
+        return baseAction;
     }
 }
