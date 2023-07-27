@@ -64,10 +64,19 @@ public class UnitActionSystem : MonoBehaviour
         {
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetMouseWorldPosition());
 
-            if (selectedAction.IsValidActionGridPosition(mouseGridPosition)) 
+            // If the selected grid position is valid for the action and the unit
+            if (!selectedAction.IsValidActionGridPosition(mouseGridPosition))
             {
-                selectedAction.TakeAction(mouseGridPosition, ClearBusy);
+                return;
             }
+            // If we can spend enough action points. If yes, actionPoints will be spend.
+            if (!selectedUnit.CanSpendActionPointsToTakeAction(selectedAction))
+            {
+                return;
+            }
+
+            selectedAction.TakeAction(mouseGridPosition, ClearBusy);
+            
         
         }
     }

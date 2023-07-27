@@ -8,6 +8,7 @@ public class Unit : MonoBehaviour
     private MoveAction moveAction;
     private SpinAction spinAction;
     private BaseAction[] baseActionArray;
+    private int actionPoints = 2;
 
     private GridPosition gridPosition;
 
@@ -39,6 +40,37 @@ public class Unit : MonoBehaviour
         }
     }
 
+    // Tries to deduct action points for an action and if succesful, returns true
+    public bool TrySpendActionPointsToTakeAction(BaseAction action)
+    {
+        if (CanSpendActionPointsToTakeAction(action))
+        {
+            SpendActionPoints(action.GetActionPointsCost());
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
+    // Action points check
+    public bool CanSpendActionPointsToTakeAction(BaseAction action)
+    {
+        if (action.GetActionPointsCost() >= actionPoints)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    // Spending action points
+    private void SpendActionPoints(int amount)
+    {
+        actionPoints -= amount;
+    }
 
     public override string ToString()
     {
@@ -62,5 +94,7 @@ public class Unit : MonoBehaviour
     {
         return baseActionArray;
     }
+
+
 
 }

@@ -51,6 +51,7 @@ public class SpinAction : BaseAction
         return "SPIN";
     }
 
+    // Return valid position -> only the unit position is valid
     public override List<GridPosition> GetValidActionGridPositionList()
     {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
@@ -62,5 +63,11 @@ public class SpinAction : BaseAction
         {
             unitGridPosition
         };
+    }
+
+    // Return 2 points for Spinaction
+    public override int GetActionPointsCost()
+    {
+        return 2;
     }
 }

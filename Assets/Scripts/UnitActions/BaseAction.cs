@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 // Abstract -> can't instantiate this class
 public abstract class BaseAction : MonoBehaviour
 {
-
     protected Unit unit;
     protected bool isActive = false;
     protected Action onActionComplete;
@@ -23,11 +23,13 @@ public abstract class BaseAction : MonoBehaviour
     // generic take action method
     public abstract void TakeAction(GridPosition gridPosition, Action onActionComplete);
 
+    // Returns whether grid position list contains specified grid position
     public virtual bool IsValidActionGridPosition(GridPosition gridPosition)
     {
         return GetValidActionGridPositionList().Contains(gridPosition);
     }
 
+    // Handles UI (hides it) during being busy
     protected virtual void HandleBusyUI()
     {
         if (!isActive)
@@ -40,6 +42,13 @@ public abstract class BaseAction : MonoBehaviour
         UnitActionSystemUI.Instance.ToggleBusyUI();
     }
 
+    // Abstract method, implement checking valid grid positions for specified actions.
     public abstract List<GridPosition> GetValidActionGridPositionList();
+
+    // Returns number of action points, that the action costs
+    public virtual int GetActionPointsCost()
+    {
+        return 1;
+    }
 
 }
