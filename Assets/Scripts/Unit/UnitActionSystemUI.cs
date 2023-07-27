@@ -44,6 +44,8 @@ public class UnitActionSystemUI : MonoBehaviour
         UpdateActionPoints();
         CreateUnitActionButtons();
         UpdateSelectedActionVisual();
+        // Start with unselected actionPointtext
+        actionPointsText.gameObject.SetActive(false);
     }
 
     // Create UI buttons for each of the actions
@@ -136,6 +138,8 @@ public class UnitActionSystemUI : MonoBehaviour
     // Updates UI text for number of actions
     private void UpdateActionPoints()
     {
+        actionPointsText.gameObject.SetActive(true);
+
         Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
         if (selectedUnit == null) return;
 
