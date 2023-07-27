@@ -1,8 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class UnitActionSystemUI : MonoBehaviour
@@ -10,8 +14,12 @@ public class UnitActionSystemUI : MonoBehaviour
     // Singleton pattern
     public static UnitActionSystemUI Instance { get; private set; }
 
+    // Canvas - contains all UI
+    private GameObject UnitUIcanvas;
+
     [SerializeField] private Transform actionButtonPrefab;
     [SerializeField] private Transform actionButtonContainerTransform;
+    [SerializeField] private TextMeshProUGUI actionPointsText;
 
     private void Awake()
     {
@@ -22,22 +30,27 @@ public class UnitActionSystemUI : MonoBehaviour
             return;
         }
         Instance = this;
+
+        UnitUIcanvas = this.transform.parent.gameObject;
+        Assert.IsNotNull(UnitUIcanvas);
     }
 
     private void Start()
     {
         UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged;
         UnitActionSystem.Instance.OnSelectedActionChanged += UnitActionSystem_OnSelectedActionChanged;
+        UnitActionSystem.Instance.OnActionStarted += UnitActionSystem_OnActionStarted;
+        
+        UpdateActionPoints();
         CreateUnitActionButtons();
         UpdateSelectedActionVisual();
     }
-
 
     // Create UI buttons for each of the actions
     private void CreateUnitActionButtons()
     {
         DestroyCurrentButtons();
-        Unit selectedUnit = UnitActionSystem.Instance.getSelectedUnit();
+        Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
         if (selectedUnit == null) {
             return;
         }
@@ -50,6 +63,7 @@ public class UnitActionSystemUI : MonoBehaviour
         }
     }
 
+    // Removes current buttons
     private void DestroyCurrentButtons()
     {
         foreach(Transform buttonTransform in actionButtonContainerTransform)
@@ -58,15 +72,24 @@ public class UnitActionSystemUI : MonoBehaviour
         }
     }
 
+    // On selected unit changed
     private void UnitActionSystem_OnSelectedUnitChanged(object sender,  EventArgs e)
     {
-        CreateUnitActionButtons();
-        UpdateSelectedActionVisual();
+            UpdateActionPoints();
+            CreateUnitActionButtons();
+            UpdateSelectedActionVisual();
     }
 
+    // On action changed
     private void UnitActionSystem_OnSelectedActionChanged(object sender, EventArgs e)
     {
         UpdateSelectedActionVisual();
+    }
+
+    // On taking an action
+    private void UnitActionSystem_OnActionStarted(object sender, EventArgs e)
+    {
+        UpdateActionPoints();
     }
 
     // Updates the visual of the selected action to be green
@@ -95,8 +118,28 @@ public class UnitActionSystemUI : MonoBehaviour
     // Toggles the UI to the busy state. In my case -> no UI
     public void ToggleBusyUI()
     {
-        bool isUIActive = actionButtonContainerTransform.gameObject.activeSelf;
-        actionButtonContainerTransform.gameObject.SetActive(!isUIActive);
+        bool isUIActive = UnitUIcanvas.activeSelf;
+        UnitUIcanvas.SetActive(!isUIActive);
+    }
+
+    private void HideUnitUI()
+    {
+        UnitUIcanvas.SetActive(false);
+        Debug.Log("Hidning UI: " +  UnitUIcanvas);
+    }
+
+    private void ShowUnitUI()
+    {
+        UnitUIcanvas.SetActive(true);
+    }
+
+    // Updates UI text for number of actions
+    private void UpdateActionPoints()
+    {
+        Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
+        if (selectedUnit == null) return;
+
+        actionPointsText.text = "Action Points: " + selectedUnit.GetActionPoints();
     }
 
 }

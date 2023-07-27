@@ -95,6 +95,9 @@ public class Unit : MonoBehaviour
         return baseActionArray;
     }
 
-
+    public int GetActionPoints()
+    {
+        return actionPoints;
+    }
 
 }

@@ -30,7 +30,7 @@ public class UnitSelectedVisual : MonoBehaviour
 
     private void UpdateVisuals()
     {
-        Unit selectedUnit = UnitActionSystem.Instance.getSelectedUnit();
+        Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
         // If this unit is selected - enable meshrenderer of the circle
         if (unit == selectedUnit)
         {

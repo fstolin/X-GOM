@@ -9,6 +9,7 @@ public class UnitActionSystem : MonoBehaviour
     // Unit selected event
     public event System.EventHandler OnSelectedUnitChanged;
     public event System.EventHandler OnSelectedActionChanged;
+    public event System.EventHandler OnActionStarted;
     // Singleton pattern
     public static UnitActionSystem Instance { get; private set; }
 
@@ -60,6 +61,7 @@ public class UnitActionSystem : MonoBehaviour
     // Handles unit actions
     private void HandleSelectedAction()
     {
+
         if (Input.GetMouseButtonDown(1))
         {
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetMouseWorldPosition());
@@ -75,6 +77,7 @@ public class UnitActionSystem : MonoBehaviour
                 return;
             }
 
+            OnActionStarted?.Invoke(this, EventArgs.Empty);
             selectedAction.TakeAction(mouseGridPosition, ClearBusy);
             
         
@@ -113,7 +116,7 @@ public class UnitActionSystem : MonoBehaviour
                 }
             }
             // Selection was unsuccessful - Select null unit to fire events
-            SetSelectedUnit(null);
+            // OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
         }
         return false;
     }
@@ -129,7 +132,7 @@ public class UnitActionSystem : MonoBehaviour
         OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public Unit getSelectedUnit()
+    public Unit GetSelectedUnit()
     {
         return selectedUnit;
     }
