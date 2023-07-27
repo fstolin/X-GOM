@@ -92,7 +92,6 @@ public class MoveAction : BaseAction
                 validGridPositionList.Add(inRangeGridPosition);
             }
         }
-        Debug.Log("MoveActionasdkjasdlasjdk");
 
         return validGridPositionList;
     }

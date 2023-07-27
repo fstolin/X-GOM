@@ -57,8 +57,6 @@ public class SpinAction : BaseAction
         List<GridPosition> validGridPositionList = new List<GridPosition>();
         GridPosition unitGridPosition = unit.GetGridPosition();
 
-        Debug.Log("SpinAction");
-
         return new List<GridPosition>
         {
             unitGridPosition

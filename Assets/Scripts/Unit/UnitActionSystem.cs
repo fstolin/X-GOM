@@ -70,7 +70,7 @@ public class UnitActionSystem : MonoBehaviour
                 return;
             }
             // If we can spend enough action points. If yes, actionPoints will be spend.
-            if (!selectedUnit.CanSpendActionPointsToTakeAction(selectedAction))
+            if (!selectedUnit.TrySpendActionPointsToTakeAction(selectedAction))
             {
                 return;
             }

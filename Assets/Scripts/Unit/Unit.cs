@@ -56,7 +56,7 @@ public class Unit : MonoBehaviour
     // Action points check
     public bool CanSpendActionPointsToTakeAction(BaseAction action)
     {
-        if (action.GetActionPointsCost() >= actionPoints)
+        if (action.GetActionPointsCost() <= actionPoints)
         {
             return true;
         }
