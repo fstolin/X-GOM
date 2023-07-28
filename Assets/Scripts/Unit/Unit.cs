@@ -1,14 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    // Seriazables
+    [SerializeField] private int defaultActionPoints = 2;
+
     // Actions
     private MoveAction moveAction;
     private SpinAction spinAction;
     private BaseAction[] baseActionArray;
-    private int actionPoints = 2;
+    private int actionPoints;
 
     private GridPosition gridPosition;
 
@@ -17,6 +21,7 @@ public class Unit : MonoBehaviour
         moveAction = GetComponent<MoveAction>();
         spinAction = GetComponent<SpinAction>();
         baseActionArray = GetComponents<BaseAction>();
+        this.actionPoints = defaultActionPoints;
     }
 
     private void Start()
@@ -26,6 +31,9 @@ public class Unit : MonoBehaviour
 
         Debug.Assert(gridPosition != null);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
+
+        // Listen to next turn
+        TurnSystem.Instance.OnNextTurnHappening += TurnSystem_OnNextTurnHappening;
     }
 
     private void Update()
@@ -64,6 +72,11 @@ public class Unit : MonoBehaviour
         {
             return false;
         }
+    }
+
+    private void TurnSystem_OnNextTurnHappening(object sender, EventArgs e)
+    {
+        actionPoints = defaultActionPoints;
     }
 
     // Spending action points
