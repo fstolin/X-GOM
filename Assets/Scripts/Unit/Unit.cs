@@ -8,6 +8,9 @@ public class Unit : MonoBehaviour
     // Seriazables
     [SerializeField] private int defaultActionPoints = 2;
 
+    // Static event -> gets fired on ANY class of Unit, that's why we name it OnAny
+    public static event EventHandler OnAnyActionPointsChanged;
+
     // Actions
     private MoveAction moveAction;
     private SpinAction spinAction;
@@ -77,12 +80,14 @@ public class Unit : MonoBehaviour
     private void TurnSystem_OnNextTurnHappening(object sender, EventArgs e)
     {
         actionPoints = defaultActionPoints;
+        OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
     }
 
     // Spending action points
     private void SpendActionPoints(int amount)
     {
         actionPoints -= amount;
+        OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public override string ToString()

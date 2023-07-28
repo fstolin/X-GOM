@@ -40,7 +40,7 @@ public class UnitActionSystemUI : MonoBehaviour
         UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged;
         UnitActionSystem.Instance.OnSelectedActionChanged += UnitActionSystem_OnSelectedActionChanged;
         UnitActionSystem.Instance.OnActionStarted += UnitActionSystem_OnActionStarted;
-        TurnSystem.Instance.OnNextTurnHappening += TurnSystem_OnNextTurnHappening;
+        Unit.OnAnyActionPointsChanged += Unit_OnAnyActionPointsChanged;
         
         UpdateActionPoints();
         CreateUnitActionButtons();
@@ -75,8 +75,8 @@ public class UnitActionSystemUI : MonoBehaviour
         }
     }
 
-    // Listen to next turn happening
-    private void TurnSystem_OnNextTurnHappening(object sender, EventArgs e)
+    // We won't listen to the next turn, but to an event, when the action points change.
+    private void Unit_OnAnyActionPointsChanged(object sender, EventArgs e)
     {
         UpdateActionPoints();
     }
