@@ -148,6 +148,7 @@ public class UnitActionSystemUI : MonoBehaviour
         actionPointsText.gameObject.SetActive(true);
 
         Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
+        //Debug.Log("Unit has: " + selectedUnit.GetActionPoints() + " action points.");
         if (selectedUnit == null) return;
 
         actionPointsText.text = "Action Points: " + selectedUnit.GetActionPoints();
