@@ -78,10 +78,15 @@ public class Unit : MonoBehaviour
         }
     }
 
+    // Next turn -> reset action points
     private void TurnSystem_OnNextTurnHappening(object sender, EventArgs e)
     {
-        actionPoints = defaultActionPoints;
-        OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
+        if (IsEnemy() && !TurnSystem.Instance.IsPlayerTurn() || // Is enemy & not players turn
+            !IsEnemy() && TurnSystem.Instance.IsPlayerTurn())   // Is the player & it is players turn
+        {
+            actionPoints = defaultActionPoints;
+            OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
+        }        
     }
 
     // Spending action points
@@ -119,7 +124,7 @@ public class Unit : MonoBehaviour
         return actionPoints;
     }
 
-    public bool GetIsEnemy()
+    public bool IsEnemy()
     {
         return isEnemy;
     }

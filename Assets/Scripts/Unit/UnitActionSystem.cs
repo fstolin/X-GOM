@@ -39,7 +39,13 @@ public class UnitActionSystem : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        // UI / Unit busy
         if (isBusy)
+        {
+            return;
+        }
+        // Enemy turn
+        if (!TurnSystem.Instance.IsPlayerTurn()) 
         {
             return;
         }
@@ -112,7 +118,7 @@ public class UnitActionSystem : MonoBehaviour
                         return false;
                     }
                     // Don't select enemies
-                    if (unit.GetIsEnemy())
+                    if (unit.IsEnemy())
                     {
                         return false;
                     }
