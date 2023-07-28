@@ -106,11 +106,17 @@ public class UnitActionSystem : MonoBehaviour
                 // Try get the Unit component, if we found it, select the unit
                 if (hitInfo.transform.TryGetComponent<Unit>(out Unit unit))
                 {
-                    if (unit == selectedUnit)
+                    // Don't select already selected unit
+                    if (unit == selectedUnit) 
                     {
-                        // Unit is already selected
                         return false;
                     }
+                    // Don't select enemies
+                    if (unit.GetIsEnemy())
+                    {
+                        return false;
+                    }
+
                     SetSelectedUnit(unit);
                     return true;
                 }

@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float cameraMoveSpeed = 10f;
     [SerializeField] private float cameraRotationSpeed = 100f;
     [SerializeField] private float zoomSpeed = 10f;
+    [SerializeField] private float cameraPanSpeed = 5f;
     [SerializeField] private float zoomUpperBounds = 8f;
     [SerializeField] private float zoomLowerBounds = 1f;
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
@@ -54,6 +55,11 @@ public class CameraController : MonoBehaviour
         {
             inputMoveDirection *= 2;
         }
+        if (Input.GetMouseButton(0))
+        {
+            inputMoveDirection += new Vector3(-Input.GetAxis("Mouse X"), 0f, -Input.GetAxis("Mouse Y")) * cameraPanSpeed;
+            
+        }
         transform.Translate(inputMoveDirection * Time.deltaTime * cameraMoveSpeed);
     }
 
@@ -70,7 +76,7 @@ public class CameraController : MonoBehaviour
         }
         if (Input.GetMouseButton(2))
         {
-            transform.Rotate(0f, cameraRotationSpeed * Time.deltaTime * Input.GetAxis("Mouse X"), 0f);
+            transform.Rotate(0f, 3*cameraRotationSpeed * Time.deltaTime * Input.GetAxis("Mouse X"), 0f);
         }
     }
 

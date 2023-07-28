@@ -7,6 +7,7 @@ public class Unit : MonoBehaviour
 {
     // Seriazables
     [SerializeField] private int defaultActionPoints = 2;
+    [SerializeField] private bool isEnemy;
 
     // Static event -> gets fired on ANY class of Unit, that's why we name it OnAny
     public static event EventHandler OnAnyActionPointsChanged;
@@ -116,6 +117,11 @@ public class Unit : MonoBehaviour
     public int GetActionPoints()
     {
         return actionPoints;
+    }
+
+    public bool GetIsEnemy()
+    {
+        return isEnemy;
     }
 
 }
