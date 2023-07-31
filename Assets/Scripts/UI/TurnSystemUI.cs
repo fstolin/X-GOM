@@ -29,6 +29,7 @@ public class TurnSystemUI : MonoBehaviour
         // UI Start 
         turnCountText.text = "Turn: 1";
         enemyTurnText.gameObject.SetActive(false);
+        TurnSystem.Instance.OnNextTurnHappening += TurnSystem_OnNextTurnHappening;
 
         nextTurnButton.onClick.AddListener(() =>
         {
@@ -36,6 +37,11 @@ public class TurnSystemUI : MonoBehaviour
             UpdateTurnCountText();
             HandleTurnSystemUI();
         });
+    }
+
+    private void TurnSystem_OnNextTurnHappening(object sender, EventArgs e)
+    {
+        HandleTurnSystemUI();
     }
 
     private void UpdateTurnCountText()
@@ -54,10 +60,24 @@ public class TurnSystemUI : MonoBehaviour
     {
         if (TurnSystem.Instance.IsPlayerTurn())
         {
+            // PLAYER TURN
+            // disable enemy turn text
             enemyTurnText.gameObject.SetActive(false);
+            // enable next turn and turn count
+            nextTurnButton.gameObject.SetActive(true);
+            turnCountText.gameObject.SetActive(true);
+            // enable rendervisuals
+            GridSystemVisual.Instance.EnableRenderVisuals();
         } else
         {
+            // ENEMY TURN
+            // enable enemy turn text
             enemyTurnText.gameObject.SetActive(true);
+            // disable next turn and turn count
+            nextTurnButton.gameObject.SetActive(false);
+            turnCountText.gameObject.SetActive(false);
+            // disable render visuals
+            GridSystemVisual.Instance.DisableRenderVisuals();
         }
     }
 }

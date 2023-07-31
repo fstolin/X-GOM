@@ -41,6 +41,7 @@ public class UnitActionSystemUI : MonoBehaviour
         UnitActionSystem.Instance.OnSelectedActionChanged += UnitActionSystem_OnSelectedActionChanged;
         UnitActionSystem.Instance.OnActionStarted += UnitActionSystem_OnActionStarted;
         Unit.OnAnyActionPointsChanged += Unit_OnAnyActionPointsChanged;
+        TurnSystem.Instance.OnNextTurnHappening += TurnSystem_OnNextTurnHappening;
         
         UpdateActionPoints();
         CreateUnitActionButtons();
@@ -99,6 +100,18 @@ public class UnitActionSystemUI : MonoBehaviour
     private void UnitActionSystem_OnActionStarted(object sender, EventArgs e)
     {
         UpdateActionPoints();
+    }
+
+    private void TurnSystem_OnNextTurnHappening(object sender, EventArgs e)
+    {
+        Debug.Log(TurnSystem.Instance.IsPlayerTurn());
+        if (TurnSystem.Instance.IsPlayerTurn())
+        {
+            actionButtonContainerTransform.gameObject.SetActive(true);
+        } else
+        {
+            actionButtonContainerTransform.gameObject.SetActive(false);
+        }
     }
 
     // Updates the visual of the selected action to be green
