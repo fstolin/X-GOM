@@ -11,6 +11,7 @@ public class TurnSystemUI : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI turnCountText;
     [SerializeField] private Button nextTurnButton;
+    [SerializeField] private TextMeshProUGUI enemyTurnText;
 
     private void Awake()
     {
@@ -25,17 +26,38 @@ public class TurnSystemUI : MonoBehaviour
 
     private void Start()
     {
+        // UI Start 
         turnCountText.text = "Turn: 1";
+        enemyTurnText.gameObject.SetActive(false);
 
         nextTurnButton.onClick.AddListener(() =>
         {
             TurnSystem.Instance.NextTurn();
             UpdateTurnCountText();
+            HandleTurnSystemUI();
         });
     }
 
     private void UpdateTurnCountText()
     {
         turnCountText.text = "Turn: " + TurnSystem.Instance.GetTurnNumber();
+    }
+
+    // Handles Turn System UI as a whole
+    private void HandleTurnSystemUI()
+    {
+        HandleEnemyTurnUI();
+    }
+
+    // Handles enemy turn UI display
+    private void HandleEnemyTurnUI()
+    {
+        if (TurnSystem.Instance.IsPlayerTurn())
+        {
+            enemyTurnText.gameObject.SetActive(false);
+        } else
+        {
+            enemyTurnText.gameObject.SetActive(true);
+        }
     }
 }
