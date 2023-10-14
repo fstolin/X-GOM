@@ -5,7 +5,15 @@ using UnityEngine;
 
 public class ShootAction : BaseAction
 {
-    private float alreadySpinned = 0f;
+
+    [SerializeField] private int maxShootDistance = 7;
+    // Shooting states 
+    private enum State
+    {
+        Aiming,
+        Shooting,
+        Cooloff,
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -18,17 +26,7 @@ public class ShootAction : BaseAction
     {
         if (!isActive) return;
 
-        float spinAddAmount = 360f * Time.deltaTime;
-        alreadySpinned += spinAddAmount;
 
-        if (alreadySpinned > 360f)
-        {
-            isActive = false;
-            onActionComplete();
-            HandleBusyUI();
-        }
-
-        transform.eulerAngles += new Vector3(0, spinAddAmount, 0);
     }
     public override string GetActionName()
     {
@@ -38,12 +36,50 @@ public class ShootAction : BaseAction
     public override List<GridPosition> GetValidActionGridPositionList()
     {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
+        if (unit == null) return validGridPositionList;
+
+        // Unit grid position
         GridPosition unitGridPosition = unit.GetGridPosition();
 
-        return new List<GridPosition>
+        // Cycle offsets
+        for (int x = -maxShootDistance; x <= maxShootDistance; x++)
         {
-            unitGridPosition
-        };
+            for (int z = -maxShootDistance; z <= maxShootDistance; z++)
+            {
+                GridPosition offsetGridPosition = new GridPosition(x, z);
+                GridPosition inRangeGridPosition = unitGridPosition + offsetGridPosition;
+                // Do nothing if position is invalid
+                if (!LevelGrid.Instance.IsValidGridPosition(inRangeGridPosition))
+                {
+                    continue;
+                }
+
+                // Distance check - circular range
+                int testDistance = Mathf.Abs(x) + Mathf.Abs(z);
+                if (testDistance > maxShootDistance)
+                {
+                    continue;
+                }
+
+                // Occupied slots = valid
+                if (!LevelGrid.Instance.HasAnyUnitsOnGridPosition(inRangeGridPosition))
+                {
+                    continue;
+                }
+       
+                Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(inRangeGridPosition);
+                // Do not add friendly units - compare this unit with target unit
+                if (targetUnit.IsEnemy() == unit.IsEnemy())
+                {
+                    continue;
+                }
+
+                // Add it to list if it's valid
+                validGridPositionList.Add(inRangeGridPosition);
+            }
+        }
+
+        return validGridPositionList;
     }
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)

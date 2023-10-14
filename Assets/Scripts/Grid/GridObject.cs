@@ -31,6 +31,23 @@ public class GridObject
         return unitList;
     }
 
+    public bool HasAnyUnit()
+    {
+        return unitList.Count > 0;
+    }
+
+    public Unit GetUnit()
+    {
+        if (HasAnyUnit())
+        {
+            Debug.Assert(GetUnitList().Count == 1, "Assertion failed! There are more than 1 units on 1 tile.");
+            return GetUnitList()[0];
+        } else
+        {
+            return null;
+        }
+    }
+
     public bool IsGridTileEmpty()
     {
         return unitList.Count == 0;
