@@ -51,4 +51,20 @@ public abstract class BaseAction : MonoBehaviour
         return 1;
     }
 
+    // Use at the start of each action, set the callback, handle UI
+    protected void ActionStart(Action onActionComplete)
+    {
+        isActive = true;
+        this.onActionComplete = onActionComplete;
+        HandleBusyUI();
+    }
+
+    // Action completed - call the callback, handle UI
+    protected void ActionComplete()
+    {
+        isActive = false;
+        onActionComplete();
+        HandleBusyUI();
+    }
+
 }

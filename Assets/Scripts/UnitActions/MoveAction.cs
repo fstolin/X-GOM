@@ -40,9 +40,7 @@ public class MoveAction : BaseAction
         else
         {
             unitAnimator.SetBool("isRunning", false);
-            this.isActive = false;
-            HandleBusyUI();
-            onActionComplete();
+            ActionComplete();
         }
         // Rotation
         transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
@@ -50,10 +48,9 @@ public class MoveAction : BaseAction
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
-        this.onActionComplete = onActionComplete;
+        ActionStart(onActionComplete);
         this.targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
-        this.isActive = true;
-        HandleBusyUI();
+       
     }
 
     // Returns a list of valid grid positions for momvement.

@@ -28,9 +28,7 @@ public class SpinAction : BaseAction
 
         if (alreadySpinned > 360f)
         {
-            isActive = false;
-            onActionComplete();
-            HandleBusyUI();
+            ActionComplete();
         }
 
         transform.eulerAngles += new Vector3(0, spinAddAmount, 0);
@@ -39,11 +37,9 @@ public class SpinAction : BaseAction
     // Spins the the player 360 degrees
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
-        // assign spinComplete reference to this Spin Action
-        this.onActionComplete = onActionComplete;
-        isActive = true;
+        ActionStart(onActionComplete);
         alreadySpinned = 0f;
-        HandleBusyUI();
+
     }
 
     public override string GetActionName()
